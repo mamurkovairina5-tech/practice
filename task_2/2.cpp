@@ -33,6 +33,17 @@ class Graph {
     adjacency_list_[from].push_back(to);
     adjacency_list_[to].push_back(from);
   }
+
+  int CountNeededEdges() {
+    int num_components = 0;
+    for (size_t i = 1; i <= num_verticies_; ++i) {
+      if (visited_[i] == false) {
+        num_components++;
+        DFS(i);
+      }
+    }
+    return num_components - 1;
+  }
 };
 
 int main() {
@@ -46,5 +57,6 @@ int main() {
     std::cin >> from >> to;
     graph.AddEdge(from, to);
   }
+  std::cout << graph.CountNeededEdges() << std::endl;
   return 0;
 }
