@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+
+class SnowTracker {
+ private:
+  int num_streets_;
+  std::vector<int64_t> streets_;
+
+ public:
+  SnowTracker(int n) {
+    num_streets_ = n;
+    streets_.resize(n + 1, 0);
+  }
+
+  void AddSnow(int street_id, int64_t snow) {
+    streets_[street_id] += snow;
+  }
+
+  int64_t TotalSnow(int start_index, int end_index) {
+    int64_t total_snow = 0;
+    for (int i = start_index; i <= end_index; ++i) {
+      total_snow += streets_[i];
+    }
+    return total_snow;
+  }
+};
+
+int main() {
+  int num_streets = 0;
+  int num_requests = 0;
+  std::cin >> num_streets >> num_requests;
+  SnowTracker tracker(num_streets);
+  return 0;
+}
