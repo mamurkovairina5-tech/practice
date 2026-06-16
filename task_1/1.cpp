@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 void FindShortestPath(std::vector<std::vector<int>>& pyramid, int n) {
   // dp[row][column] хранит минимальное время спуска до данной ячейки
@@ -36,6 +37,41 @@ void FindShortestPath(std::vector<std::vector<int>>& pyramid, int n) {
         dp[next_row][next_column_right] = time_column_right;
         parent[next_row][next_column_right] = {row, column};
       }
+    }
+  }
+
+  // Поиск ответа и вывод пути
+  int min_total_time = INF;
+  int finish_column = -1;
+
+  // Нахождение минимального времени на последней строке
+  for (int column = 0; column < n; ++column) {
+    if (dp[n - 1][column] < min_total_time) {
+      min_total_time = dp[n - 1][column];
+      finish_column = column;
+    }
+  }
+
+  // Восстановление пути с основания горы к вершине
+  std::vector<int> path;
+  int current_row = n - 1;
+  int current_column = finish_column;
+
+  while (current_row != -1 && current_column != -1) {
+    path.push_back(pyramid[current_row][current_column]);
+    std::pair<int, int> cell = parent[current_row][current_column];
+    current_row = cell.first;
+    current_column = cell.second;
+  }
+
+  std::reverse(path.begin(), path.end());
+
+  std::cout << min_total_time << std::endl;
+  for (size_t i = 0; i < path.size(); ++i) {
+    if (i == path.size() - 1) {
+      std::cout << path[i] << std::endl;
+    } else {
+      std::cout << path[i] << " ";
     }
   }
 }
