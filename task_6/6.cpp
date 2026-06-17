@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 int main() {
   int num_requests = 0;
@@ -11,6 +12,12 @@ int main() {
     int x = 0;
     int y = 0;
     std::cin >> a >> b >> x >> y;
+    int pairs_a = 0;
+    int pairs_b = 0;
+    pairs_b = std::min(b, x);
+    x -= pairs_b;
+    pairs_a = std::min(a, x + y);
+    result[i] = pairs_a + pairs_b;
   }
   for (int i = 0; i < num_requests; ++i) {
     if (i == num_requests - 1) {
