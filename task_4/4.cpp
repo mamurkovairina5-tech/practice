@@ -14,6 +14,19 @@ class Decryptor {
     encryption_num_ = k;
     permutation_ = p;
   }
+
+  std::string Decryption(std::string& encrypted_word) {
+    std::string decrypted_word = encrypted_word;
+    for (int step = 0; step < encryption_num_; ++step) {
+      std::string temp_word(word_len_, ' ');
+      for (int i = 0; i < word_len_; ++i) {
+        int position = permutation_[i] - 1;
+        temp_word[position] = decrypted_word[i];
+      }
+      decrypted_word = temp_word;
+    }
+    return decrypted_word;
+  }
 };
 
 int main() {
@@ -27,5 +40,8 @@ int main() {
   std::string encrypted_word;
   std::cin >> encrypted_word;
   Decryptor decryptor(len, count_iterations, permutation);
+  std::string original_word;
+  original_word = decryptor.Decryption(encrypted_word);
+  std::cout << original_word << std::endl;
   return 0;
 }
